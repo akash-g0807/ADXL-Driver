@@ -2,9 +2,10 @@
 #include <stdio.h>
  
 
- void ADXL343_ReadRegisters(ADXL343 *dev, const uint8_t reg, const uint8_t addr, uint8_t *data_buff, const uint8_t num_bytes){
+ uint8_t ADXL343_ReadRegisters(ADXL343 *dev, const uint8_t reg, const uint8_t addr, uint8_t *data_buff, const uint8_t num_bytes){
      i2c_write_blocking(dev->i2c, addr, &reg, 1, true);  
-     i2c_read_blocking(dev->i2c, addr, data_buff, 1, false);
+     uint8_t read = i2c_read_blocking(dev->i2c, addr, data_buff, num_bytes, false);
+     return read;
 
 }
 
@@ -20,10 +21,11 @@
     sleep_ms(1000);
     
     uint8_t chipID[1];
-    ADXL343_ReadRegisters(dev,ADXL343_REG_DEVID,ADXL343_ADDRESS,chipID,0);
-  
+    uint8_t read = ADXL343_ReadRegisters(dev,ADXL343_REG_DEVID,ADXL343_ADDRESS,chipID,1);
+
     while(true){
-    	printf("%X YEAH!\n", chipID[0]);    
+        printf("%d ",read);
+    	printf("0x%X\n", chipID[0]);    
     }
 
     if(chipID[0] == ADXL343_DEVID){
