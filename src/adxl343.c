@@ -38,7 +38,7 @@ void ADXL343_WriteRegister(ADXL343 *dev, const uint8_t reg, const uint8_t addr, 
 
 
     uint8_t msg[1];
-    msg[0] = 0x08;
+    msg[0] = 0x08;   // Setting measure but high
 
     uint8_t return_data[1];
 
