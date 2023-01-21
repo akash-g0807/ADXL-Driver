@@ -29,8 +29,8 @@ void ADXL343_WriteRegister(ADXL343 *dev, const uint8_t reg, const uint8_t addr, 
     dev->i2c = i2c;
 
     dev->acc[0] = 0.00f;
-    dev->acc[0] = 0.00f;
-    dev->acc[0] = 0.00f;
+    dev->acc[1] = 0.00f;
+    dev->acc[2] = 0.00f;
     sleep_ms(1000);
     
     uint8_t chipID[1];
