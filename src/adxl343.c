@@ -23,7 +23,13 @@ void ADXL343_WriteRegister(ADXL343 *dev, const uint8_t reg, const uint8_t addr, 
 
 
 
- int  ADXL343_Initialise(ADXL343 *dev, i2c_inst_t *i2c){
+ int  ADXL343_Initialise(ADXL343 *dev, i2c_inst_t *i2c, uint8_t sda_pin, uint8_t scl_pin){
+
+    gpio_set_function(sda_pin, GPIO_FUNC_I2C);
+    gpio_set_function(scl_pin, GPIO_FUNC_I2C);
+     
+    gpio_pull_up(sda_pin);
+    gpio_pull_up(scl_pin);
 
     /* Setting sensor struct parameters*/
     dev->i2c = i2c;
@@ -47,7 +53,7 @@ void ADXL343_WriteRegister(ADXL343 *dev, const uint8_t reg, const uint8_t addr, 
     uint8_t return_value = ADXL343_ReadRegisters(dev,ADXL343_REG_POWER_CTL,ADXL343_ADDRESS,return_data,1);
 
     while(true){
-        printf("Chip_ID: 0x%X\n", chipID[0]);   
+        printf("CHIP_ID: 0x%X\n", chipID[0]);   
         sleep_ms(1000);
     	printf("POWER_CTL_REG: 0x%X\n", return_data[0]);
     }
@@ -68,24 +74,16 @@ int main() {
 
     stdio_init_all();
  
-    const uint sda_pin = 16;
-    const uint scl_pin = 17;
+    const uint8_t sda_pin = 16;
+    const uint8_t scl_pin = 17;
 
     //Initialize I2C port at 400 kHz
     i2c_init(i2c0, 400 * 1000);
-
-
-    // Initialize I2C pins
-    gpio_set_function(sda_pin, GPIO_FUNC_I2C);
-    gpio_set_function(scl_pin, GPIO_FUNC_I2C);
-     
-    gpio_pull_up(sda_pin);
-    gpio_pull_up(scl_pin);
  
 
     ADXL343 sensor1;
 
-    int status = ADXL343_Initialise(&sensor1,i2c0);
+    int status = ADXL343_Initialise(&sensor1,i2c0, sda_pin, scl_pin);
 
 
     while (status){

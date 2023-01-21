@@ -68,7 +68,7 @@ typedef struct {
 INITIALISATION
 */
 
- int ADXL343_Initialise(ADXL343 *dev, i2c_inst_t *i2c);
+ int ADXL343_Initialise(ADXL343 *dev, i2c_inst_t *i2c, uint8_t sda_pin, uint8_t scl_pin);
 
 
 /*
