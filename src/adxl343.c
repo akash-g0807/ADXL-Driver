@@ -2,6 +2,13 @@
 #include <stdio.h>
  
 
+ void ADXL343_ReadRegisters(ADXL343 *dev, const uint8_t reg, const uint8_t addr, uint8_t *data_buff, const uint8_t num_bytes){
+     i2c_write_blocking(dev->i2c, addr, &reg, 1, true);  
+     i2c_read_blocking(dev->i2c, addr, data_buff, 1, false);
+
+}
+
+
  int  ADXL343_Initialise(ADXL343 *dev, i2c_inst_t *i2c){
 
     /* Setting sensor struct parameters*/
@@ -10,15 +17,14 @@
     dev->acc[0] = 0.00f;
     dev->acc[0] = 0.00f;
     dev->acc[0] = 0.00f;
-
     sleep_ms(1000);
+    
     uint8_t chipID[1];
-    i2c_write_blocking(i2c, ADXL343_ADDRESS, ADXL343_REG_DEVID, 1, true);
-    i2c_read_blocking(i2c, ADXL343_ADDRESS, chipID, 1, false);
-
-    // while(true){
-    // 	printf("%X\n", chipID[0]);    
-    // }
+    ADXL343_ReadRegisters(dev,ADXL343_REG_DEVID,ADXL343_ADDRESS,chipID,0);
+  
+    while(true){
+    	printf("%X YEAH!\n", chipID[0]);    
+    }
 
     if(chipID[0] == ADXL343_DEVID){
         return 1;
