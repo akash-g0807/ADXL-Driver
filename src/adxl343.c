@@ -22,10 +22,7 @@
 
     if(chipID[0] == ADXL343_DEVID){
         return 1;
-    }       
-
-
-    
+    }      
 
     return 0;
 }
