@@ -21,6 +21,8 @@ void ADXL343_WriteRegister(ADXL343 *dev, const uint8_t reg, const uint8_t addr, 
 
 }
 
+
+
  int  ADXL343_Initialise(ADXL343 *dev, i2c_inst_t *i2c){
 
     /* Setting sensor struct parameters*/
@@ -58,6 +60,9 @@ void ADXL343_WriteRegister(ADXL343 *dev, const uint8_t reg, const uint8_t addr, 
 
     return 0;
 }
+
+
+
 
 int main() {
 
