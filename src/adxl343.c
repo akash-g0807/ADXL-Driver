@@ -13,7 +13,7 @@
 
     sleep_ms(1000);
     uint8_t chipID[1];
-    i2c_write_blocking(i2c, ADXL343_ADDRESS, &ADXL343_REG_DEVID, 1, true);
+    i2c_write_blocking(i2c, ADXL343_ADDRESS, ADXL343_REG_DEVID, 1, true);
     i2c_read_blocking(i2c, ADXL343_ADDRESS, chipID, 1, false);
 
     while(true){

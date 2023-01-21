@@ -7,13 +7,13 @@
 
 
 /* SDO - 0 --> 0x1D, SDO - 1 --> 0x53 (pg 16)*/
-int ADXL343_ADDRESS = 0x53;  //SDO pin grounded
+#define ADXL343_ADDRESS  0x53  //SDO pin grounded
 
 #define ADXL343_DEVID 0xE5 //ADXL343 device ID
 
  
 //ADXL343 register definitions (pg 22)
-uint8_t  ADXL343_REG_DEVID = 0x00 ;
+#define  ADXL343_REG_DEVID  0x00 
 #define ADXL343_REG_THRESH_TAP 0x1D
 #define ADXL343_REG_OFSX 0x1E
 #define ADXL343_REG_OFSY 0x1F
