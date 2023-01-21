@@ -16,9 +16,9 @@
     i2c_write_blocking(i2c, ADXL343_ADDRESS, ADXL343_REG_DEVID, 1, true);
     i2c_read_blocking(i2c, ADXL343_ADDRESS, chipID, 1, false);
 
-    while(true){
-    	printf("%X\n", chipID[0]);    
-    }
+    // while(true){
+    // 	printf("%X\n", chipID[0]);    
+    // }
 
     if(chipID[0] == ADXL343_DEVID){
         return 1;
