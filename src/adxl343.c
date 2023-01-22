@@ -21,7 +21,7 @@ void ADXL343_WriteRegister(i2c_inst_t *i2c, const uint8_t reg, const uint8_t add
 
 }
 
-uint8_t  ADXL343_Initialise(ADXL *dev, i2c_inst_t *i2c, uint8_t sda_pin, uint8_t scl_pin){
+adxl_status  ADXL343_Initialise(ADXL *dev, i2c_inst_t *i2c, uint8_t sda_pin, uint8_t scl_pin){
 
     i2c_init(i2c, 400 * 1000);
 
@@ -63,11 +63,11 @@ uint8_t  ADXL343_Initialise(ADXL *dev, i2c_inst_t *i2c, uint8_t sda_pin, uint8_t
 
 
     if(chipID[0] == ADXL343_DEVID){
-        return 1;
+        return ADXL_INIT_SUCCESS;
     
-}
+    }
 
-return 0;
+return ADXL_INIT_FAIL;
 }      
 
 

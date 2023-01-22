@@ -47,9 +47,13 @@ static const float EARTH_GRAVITY = 9.80665;     // Earth's gravity in [m/s^2]
 #define ADXL343_REG_FIFO_CTL 0x38
 #define ADXL343_REG_DATA_STATUS 0x39
 
+
+/**
+ * ADXL STATUS ENUM
+*/
 typedef enum {
-    ADXL_INIT_SUCCESS,
-    ADXL_INIT_FAIL
+    ADXL_INIT_FAIL,
+    ADXL_INIT_SUCCESS
 } adxl_status;
 
 
@@ -82,7 +86,7 @@ typedef struct adxl{
 /**
  * INITIALISATION
  */
-uint8_t ADXL343_Initialise(ADXL *dev, i2c_inst_t *i2c, uint8_t sda_pin, uint8_t scl_pin);
+adxl_status ADXL343_Initialise(ADXL *dev, i2c_inst_t *i2c, uint8_t sda_pin, uint8_t scl_pin);
 
 
 /**
