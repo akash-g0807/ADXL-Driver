@@ -7,15 +7,23 @@
 
 
 static const float SENSITIVITY_2G = 1.0 / 256;  // (g/LSB)
-static const float EARTH_GRAVITY = 9.80665;     // Earth's gravity in [m/s^2]
+static const float EARTH_GRAVITY = 9.80665;    // Earth's gravity in [m/s^2]
 
-/* SDO - 0 --> 0x1D, SDO - 1 --> 0x53 (pg 16) */
+/**
+ * SDO - 0 --> 0x1D, SDO - 1 --> 0x53 (pg 16) 
+*/
 #define ADXL343_ADDRESS  0x53  /* SDO pin grounded */
 
-#define ADXL343_DEVID 0xE5 /* ADXL343 device ID */ 
+
+/**
+ * ADXL343 device ID 
+*/ 
+#define ADXL343_DEVID 0xE5 
 
  
-/* ADXL343 register definitions (pg 22) */
+/**
+ * ADXL343 register definitions (pg 22) 
+ */
 #define  ADXL343_REG_DEVID  0x00 
 #define ADXL343_REG_THRESH_TAP 0x1D
 #define ADXL343_REG_OFSX 0x1E
