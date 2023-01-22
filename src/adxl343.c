@@ -31,7 +31,7 @@ adxl_status  ADXL343_Initialise(ADXL *dev, i2c_inst_t *i2c, uint8_t sda_pin, uin
     gpio_pull_up(sda_pin);
     gpio_pull_up(scl_pin);
 
-    /* Setting sensor struct parameters*/
+    /* Setting sensor struct parameters */
     dev->i2c = i2c;
 
     dev->acc[0] = 0.00f;

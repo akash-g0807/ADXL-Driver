@@ -5,22 +5,19 @@
 #include "hardware/i2c.h"
 #include <stdint.h>
 
-
 static const float SENSITIVITY_2G = 1.0 / 256;  // (g/LSB)
 static const float EARTH_GRAVITY = 9.80665;    // Earth's gravity in [m/s^2]
 
 /**
- * SDO - 0 --> 0x1D, SDO - 1 --> 0x53 (pg 16) 
+ * SDO = 0 --> 0x1D, SDO = 1 --> 0x53 (pg 16) 
 */
 #define ADXL343_ADDRESS  0x53  /* SDO pin grounded */
-
 
 /**
  * ADXL343 device ID 
 */ 
 #define ADXL343_DEVID 0xE5 
 
- 
 /**
  * ADXL343 register definitions (pg 22) 
  */
@@ -55,7 +52,6 @@ static const float EARTH_GRAVITY = 9.80665;    // Earth's gravity in [m/s^2]
 #define ADXL343_REG_FIFO_CTL 0x38
 #define ADXL343_REG_DATA_STATUS 0x39
 
-
 /**
  * ADXL STATUS ENUM
 */
@@ -64,14 +60,11 @@ typedef enum {
     ADXL_INIT_SUCCESS
 } adxl_status;
 
-
-
 /**
  * FUNCTION POINTERS
 */
 typedef uint8_t (*read_Data)(i2c_inst_t*, const uint8_t, const uint8_t, uint8_t*, const uint8_t);
 typedef void (*write_Data)(i2c_inst_t*, const uint8_t, const uint8_t, uint8_t*, const uint8_t);
-
 
 /**
  * SENSOR STRUCT
@@ -79,7 +72,7 @@ typedef void (*write_Data)(i2c_inst_t*, const uint8_t, const uint8_t, uint8_t*, 
 typedef struct adxl{
 
     /* i2c port */
-    i2c_inst_t *i2c;
+    void *i2c;
 
     /* Acceleration data (X,Y,Z) */
     float acc[3];
@@ -88,14 +81,12 @@ typedef struct adxl{
 
     write_Data write_ADXL_Data;
 
-
 } ADXL;
 
 /**
  * INITIALISATION
  */
 adxl_status ADXL343_Initialise(ADXL *dev, i2c_inst_t *i2c, uint8_t sda_pin, uint8_t scl_pin);
-
 
 /**
  * DATA READING
@@ -107,6 +98,5 @@ int ADXL343_ReadAccelerations(ADXL *dev);
  */
 uint8_t ADXL343_ReadRegisters(i2c_inst_t* i2c, const uint8_t reg, const uint8_t addr, uint8_t *data_buff, const uint8_t num_bytes);
 void ADXL343_WriteRegister(i2c_inst_t* i2c, const uint8_t reg, const uint8_t addr, uint8_t *data_buff, const uint8_t num_bytes);
-
 
 #endif
