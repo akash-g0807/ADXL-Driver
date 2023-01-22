@@ -58,33 +58,36 @@ typedef enum {
 SENSOR STRUCT
 */
 
-typedef struct {
+
+typedef struct adxl{
+
+    struct adxl *ADXL;
     /* i2c port */
     i2c_inst_t *i2c;
 
     /*Acceleration data (X,Y,Z)*/
-    float acc[3];
+    float acc[3];    
 
-} ADXL343;
+}ADXL;
 
 /*
 INITIALISATION
 */
 
- int ADXL343_Initialise(ADXL343 *dev, i2c_inst_t *i2c, uint8_t sda_pin, uint8_t scl_pin);
+ int ADXL343_Initialise(ADXL *dev, i2c_inst_t *i2c, uint8_t sda_pin, uint8_t scl_pin);
 
 
 /*
 DATA READING
 */
-int ADXL343_ReadAccelerations(ADXL343 *dev);
+int ADXL343_ReadAccelerations(ADXL *dev);
 
 /*
 LOW LEVEL FUNCTIONS
 */
-uint8_t ADXL343_ReadRegisters(ADXL343 *dev, const uint8_t reg, const uint8_t addr, uint8_t *data_buff, const uint8_t num_bytes);
+uint8_t ADXL343_ReadRegisters(ADXL *dev, const uint8_t reg, const uint8_t addr, uint8_t *data_buff, const uint8_t num_bytes);
 
-void ADXL343_WriteRegister(ADXL343 *dev, const uint8_t reg, const uint8_t addr, uint8_t *data_buff, const uint8_t num_bytes);
+void ADXL343_WriteRegister(ADXL *dev, const uint8_t reg, const uint8_t addr, uint8_t *data_buff, const uint8_t num_bytes);
 
 
 #endif

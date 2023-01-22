@@ -2,14 +2,14 @@
 #include <stdio.h>
  
 
- uint8_t ADXL343_ReadRegisters(ADXL343 *dev, const uint8_t reg, const uint8_t addr, uint8_t *data_buff, const uint8_t num_bytes){
+ uint8_t ADXL343_ReadRegisters(ADXL *dev, const uint8_t reg, const uint8_t addr, uint8_t *data_buff, const uint8_t num_bytes){
      i2c_write_blocking(dev->i2c, addr, &reg, 1, true);  
      uint8_t num_bytes_read = i2c_read_blocking(dev->i2c, addr, data_buff, num_bytes, false);
      return num_bytes_read;
 
 }
 
-void ADXL343_WriteRegister(ADXL343 *dev, const uint8_t reg, const uint8_t addr, uint8_t *data_buff, const uint8_t num_bytes){
+void ADXL343_WriteRegister(ADXL *dev, const uint8_t reg, const uint8_t addr, uint8_t *data_buff, const uint8_t num_bytes){
     uint8_t data[num_bytes + 1];
 
     data[0] = reg;
@@ -22,7 +22,7 @@ void ADXL343_WriteRegister(ADXL343 *dev, const uint8_t reg, const uint8_t addr, 
 }
 
 
- int  ADXL343_Initialise(ADXL343 *dev, i2c_inst_t *i2c, uint8_t sda_pin, uint8_t scl_pin){
+ int  ADXL343_Initialise(ADXL *dev, i2c_inst_t *i2c, uint8_t sda_pin, uint8_t scl_pin){
 
     i2c_init(i2c, 400 * 1000);
 
@@ -53,11 +53,11 @@ void ADXL343_WriteRegister(ADXL343 *dev, const uint8_t reg, const uint8_t addr, 
 
     uint8_t return_value = ADXL343_ReadRegisters(dev,ADXL343_REG_POWER_CTL,ADXL343_ADDRESS,return_data,1);
 
-    // while(true){
-    //     printf("CHIP_ID: 0x%X\n", chipID[0]);   
-    //     sleep_ms(1000);
-    // 	printf("POWER_CTL_REG: 0x%X\n", return_data[0]);
-    // }
+    while(true){
+        printf("CHIP_ID YEAH: 0x%X\n", chipID[0]);   
+        sleep_ms(1000);
+    	printf("POWER_CTL_REG: 0x%X\n", return_data[0]);
+    }
 
 
     if(chipID[0] == ADXL343_DEVID){
@@ -68,7 +68,7 @@ void ADXL343_WriteRegister(ADXL343 *dev, const uint8_t reg, const uint8_t addr, 
     return 0;
 }
 
-int ADXL343_ReadAccelerations(ADXL343 *dev){
+int ADXL343_ReadAccelerations(ADXL *dev){
     uint8_t regData[6];
 
     uint8_t bytes_read = ADXL343_ReadRegisters(dev, ADXL343_REG_DATA_X0, ADXL343_ADDRESS ,regData, 6);
