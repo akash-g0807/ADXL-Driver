@@ -14,6 +14,7 @@ pico_sdk_init()
 add_executable(adxl343
         adxl343.c
 	adxl343.h
+        main.c
         )
 
 

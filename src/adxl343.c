@@ -24,6 +24,8 @@ void ADXL343_WriteRegister(ADXL343 *dev, const uint8_t reg, const uint8_t addr, 
 
  int  ADXL343_Initialise(ADXL343 *dev, i2c_inst_t *i2c, uint8_t sda_pin, uint8_t scl_pin){
 
+    i2c_init(i2c, 400 * 1000);
+
     gpio_set_function(sda_pin, GPIO_FUNC_I2C);
     gpio_set_function(scl_pin, GPIO_FUNC_I2C);
      
@@ -84,41 +86,4 @@ int ADXL343_ReadAccelerations(ADXL343 *dev){
 
 }
 
-
-int main() {
-
-    stdio_init_all();
- 
-    const uint8_t sda_pin = 16;
-    const uint8_t scl_pin = 17;
-
-    //Initialize I2C port at 400 kHz
-    i2c_init(i2c0, 400 * 1000);
- 
-
-    ADXL343 sensor1;
-
-    int status = ADXL343_Initialise(&sensor1,i2c0, sda_pin, scl_pin);
-
-
-    while (status){
-        printf("Connected Properly\n");
-
-        int read = ADXL343_ReadAccelerations(&sensor1);
-
-        printf("%d\n", read);
-        printf("X: %.2f | Y: %.2f | Z: %.2f\r\n", sensor1.acc[0], sensor1.acc[1], sensor1.acc[2]);
-        
-        
-        
-        sleep_ms(1000);
-
-    }
-
-    while(!status){
-        printf("Haiiyyyaaaa");
-    }
-
-    return 0;
-} 
 
