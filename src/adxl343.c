@@ -52,11 +52,11 @@ void ADXL343_WriteRegister(ADXL343 *dev, const uint8_t reg, const uint8_t addr, 
 
     uint8_t return_value = ADXL343_ReadRegisters(dev,ADXL343_REG_POWER_CTL,ADXL343_ADDRESS,return_data,1);
 
-    while(true){
-        printf("CHIP_ID: 0x%X\n", chipID[0]);   
-        sleep_ms(1000);
-    	printf("POWER_CTL_REG: 0x%X\n", return_data[0]);
-    }
+    // while(true){
+    //     printf("CHIP_ID: 0x%X\n", chipID[0]);   
+    //     sleep_ms(1000);
+    // 	printf("POWER_CTL_REG: 0x%X\n", return_data[0]);
+    // }
 
 
     if(chipID[0] == ADXL343_DEVID){
@@ -65,6 +65,24 @@ void ADXL343_WriteRegister(ADXL343 *dev, const uint8_t reg, const uint8_t addr, 
 
 
     return 0;
+}
+
+int ADXL343_ReadAccelerations(ADXL343 *dev){
+    uint8_t regData[6];
+
+    uint8_t bytes_read = ADXL343_ReadRegisters(dev, ADXL343_REG_DATA_X0, ADXL343_ADDRESS ,regData, 6);
+    
+
+    int16_t acc_x = (int16_t)((regData[1] << 8) | regData[0]);
+    int16_t acc_y = (int16_t)((regData[3] << 8) | regData[2]);
+    int16_t acc_z = (int16_t)((regData[5] << 8) | regData[4]);
+
+    dev->acc[0] = acc_x * SENSITIVITY_2G * EARTH_GRAVITY;
+    dev->acc[1] = acc_y * SENSITIVITY_2G * EARTH_GRAVITY;
+    dev->acc[2] = acc_z * SENSITIVITY_2G * EARTH_GRAVITY;
+
+    return bytes_read;
+
 }
 
 
@@ -88,6 +106,16 @@ int main() {
 
     while (status){
         printf("Connected Properly\n");
+
+        int read = ADXL343_ReadAccelerations(&sensor1);
+
+        printf("%d\n", read);
+        printf("X: %.2f | Y: %.2f | Z: %.2f\r\n", sensor1.acc[0], sensor1.acc[1], sensor1.acc[2]);
+        
+        
+        
+        sleep_ms(1000);
+
     }
 
     while(!status){

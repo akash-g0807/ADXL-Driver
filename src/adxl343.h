@@ -6,6 +6,9 @@
 #include <stdint.h>
 
 
+static const float SENSITIVITY_2G = 1.0 / 256;  // (g/LSB)
+static const float EARTH_GRAVITY = 9.80665;     // Earth's gravity in [m/s^2]
+
 /* SDO - 0 --> 0x1D, SDO - 1 --> 0x53 (pg 16)*/
 #define ADXL343_ADDRESS  0x53  //SDO pin grounded
 
