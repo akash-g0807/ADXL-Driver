@@ -2,14 +2,15 @@
 #include <stdio.h>
  
 
-uint8_t ADXL343_ReadRegisters(i2c_inst_t *i2c, const uint8_t reg, const uint8_t addr, uint8_t *data_buff, const uint8_t num_bytes){
-     i2c_write_blocking(i2c, addr, &reg, 1, true);  
-     uint8_t num_bytes_read = i2c_read_blocking(i2c, addr, data_buff, num_bytes, false);
-     return num_bytes_read;
+uint8_t ADXL343_ReadRegisters(void *i2c, const uint8_t reg, const uint8_t addr, uint8_t *data_buff, const uint8_t num_bytes){
+    sleep_ms(1000);
+    i2c_write_blocking(i2c, addr, &reg, 1, true);  
+    uint8_t num_bytes_read = i2c_read_blocking(i2c, addr, data_buff, num_bytes, false);
+    return num_bytes_read;
 
 }
 
-void ADXL343_WriteRegister(i2c_inst_t *i2c, const uint8_t reg, const uint8_t addr, uint8_t *data_buff, const uint8_t num_bytes){
+void ADXL343_WriteRegister(void *i2c, const uint8_t reg, const uint8_t addr, uint8_t *data_buff, const uint8_t num_bytes){
     uint8_t data[num_bytes + 1];
 
     data[0] = reg;
@@ -21,7 +22,7 @@ void ADXL343_WriteRegister(i2c_inst_t *i2c, const uint8_t reg, const uint8_t add
 
 }
 
-adxl_status  ADXL343_Initialise(ADXL *dev, i2c_inst_t *i2c, uint8_t sda_pin, uint8_t scl_pin){
+adxl_status  ADXL343_Initialise(ADXL *dev, void *i2c, uint8_t sda_pin, uint8_t scl_pin){
 
     i2c_init(i2c, 400 * 1000);
 
@@ -40,7 +41,6 @@ adxl_status  ADXL343_Initialise(ADXL *dev, i2c_inst_t *i2c, uint8_t sda_pin, uin
 
     dev->read_ADXL_Data = ADXL343_ReadRegisters;
     dev->write_ADXL_Data = ADXL343_WriteRegister;
-    sleep_ms(1000);
     
     uint8_t chipID[1];
     uint8_t read = dev->read_ADXL_Data(dev->i2c,ADXL343_REG_DEVID,ADXL343_ADDRESS,chipID,1);

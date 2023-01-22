@@ -63,8 +63,8 @@ typedef enum {
 /**
  * FUNCTION POINTERS
 */
-typedef uint8_t (*read_Data)(i2c_inst_t*, const uint8_t, const uint8_t, uint8_t*, const uint8_t);
-typedef void (*write_Data)(i2c_inst_t*, const uint8_t, const uint8_t, uint8_t*, const uint8_t);
+typedef uint8_t (*read_Data)(void*, const uint8_t, const uint8_t, uint8_t*, const uint8_t);
+typedef void (*write_Data)(void*, const uint8_t, const uint8_t, uint8_t*, const uint8_t);
 
 /**
  * SENSOR STRUCT
@@ -86,7 +86,7 @@ typedef struct adxl{
 /**
  * INITIALISATION
  */
-adxl_status ADXL343_Initialise(ADXL *dev, i2c_inst_t *i2c, uint8_t sda_pin, uint8_t scl_pin);
+adxl_status ADXL343_Initialise(ADXL *dev, void *i2c, uint8_t sda_pin, uint8_t scl_pin);
 
 /**
  * DATA READING
@@ -96,7 +96,7 @@ int ADXL343_ReadAccelerations(ADXL *dev);
 /**
  * LOW LEVEL FUNCTIONS
  */
-uint8_t ADXL343_ReadRegisters(i2c_inst_t* i2c, const uint8_t reg, const uint8_t addr, uint8_t *data_buff, const uint8_t num_bytes);
-void ADXL343_WriteRegister(i2c_inst_t* i2c, const uint8_t reg, const uint8_t addr, uint8_t *data_buff, const uint8_t num_bytes);
+uint8_t ADXL343_ReadRegisters(void* i2c, const uint8_t reg, const uint8_t addr, uint8_t *data_buff, const uint8_t num_bytes);
+void ADXL343_WriteRegister(void* i2c, const uint8_t reg, const uint8_t addr, uint8_t *data_buff, const uint8_t num_bytes);
 
 #endif
