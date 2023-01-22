@@ -22,7 +22,6 @@ void ADXL343_WriteRegister(ADXL343 *dev, const uint8_t reg, const uint8_t addr, 
 }
 
 
-
  int  ADXL343_Initialise(ADXL343 *dev, i2c_inst_t *i2c, uint8_t sda_pin, uint8_t scl_pin){
 
     gpio_set_function(sda_pin, GPIO_FUNC_I2C);
@@ -86,8 +85,6 @@ int ADXL343_ReadAccelerations(ADXL343 *dev){
 }
 
 
-
-
 int main() {
 
     stdio_init_all();
@@ -124,3 +121,4 @@ int main() {
 
     return 0;
 } 
+
