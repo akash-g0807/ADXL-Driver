@@ -74,7 +74,7 @@ return 0;
 int ADXL343_ReadAccelerations(ADXL *dev){
     uint8_t regData[6];
 
-    uint8_t bytes_read = ADXL343_ReadRegisters(dev->i2c, ADXL343_REG_DATA_X0, ADXL343_ADDRESS ,regData, 6);
+    uint8_t bytes_read = dev->read_ADXL_Data(dev->i2c, ADXL343_REG_DATA_X0, ADXL343_ADDRESS ,regData, 6);
     
 
     int16_t acc_x = (int16_t)((regData[1] << 8) | regData[0]);
@@ -86,8 +86,6 @@ int ADXL343_ReadAccelerations(ADXL *dev){
     dev->acc[2] = acc_z * SENSITIVITY_2G * EARTH_GRAVITY;
 
     return bytes_read;
-
-    return 0;
 
 }
 
