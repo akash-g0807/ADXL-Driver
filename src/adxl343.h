@@ -1,3 +1,9 @@
+/**
+ * ADXL343 Drivers for the RP2040
+ * Author: York Aerospace and Rocketrt
+*/
+
+
 #ifndef ADXL343_H
 #define ADXL343_H
 
@@ -11,7 +17,7 @@ static const float EARTH_GRAVITY = 9.80665;    // Earth's gravity in [m/s^2]
 /**
  * SDO = 0 --> 0x1D, SDO = 1 --> 0x53 (pg 16) 
 */
-#define ADXL343_ADDRESS  0x53  /* SDO pin grounded */
+#define ADXL343_ADDRESS  0x1D  /* SDO pin grounded */
 
 /**
  * ADXL343 device ID 
@@ -86,7 +92,7 @@ typedef struct adxl{
 /**
  * INITIALISATION
  */
-adxl_status ADXL343_Initialise(ADXL *dev, void *i2c, uint8_t sda_pin, uint8_t scl_pin);
+adxl_status ADXL343_Initialise(ADXL *dev, void *i2c);
 
 /**
  * DATA READING

@@ -3,7 +3,6 @@
  
 
 uint8_t ADXL343_ReadRegisters(void *i2c, const uint8_t reg, const uint8_t addr, uint8_t *data_buff, const uint8_t num_bytes){
-    sleep_ms(1000);
     i2c_write_blocking(i2c, addr, &reg, 1, true);  
     uint8_t num_bytes_read = i2c_read_blocking(i2c, addr, data_buff, num_bytes, false);
     return num_bytes_read;
@@ -22,15 +21,8 @@ void ADXL343_WriteRegister(void *i2c, const uint8_t reg, const uint8_t addr, uin
 
 }
 
-adxl_status  ADXL343_Initialise(ADXL *dev, void *i2c, uint8_t sda_pin, uint8_t scl_pin){
+adxl_status  ADXL343_Initialise(ADXL *dev, void *i2c){
 
-    i2c_init(i2c, 400 * 1000);
-
-    gpio_set_function(sda_pin, GPIO_FUNC_I2C);
-    gpio_set_function(scl_pin, GPIO_FUNC_I2C);
-     
-    gpio_pull_up(sda_pin);
-    gpio_pull_up(scl_pin);
 
     /* Setting sensor struct parameters */
     dev->i2c = i2c;
